@@ -1,2 +1,0 @@
-# BooksAndMovies
-The final project
