@@ -2,7 +2,7 @@ package com.example.demo.persistence.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -19,8 +19,10 @@ public class Book {
 
     private String type;
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<BookItem> bookItems;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "bookId")
+    private List<Rating> ratings = new ArrayList<>();
 
-
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> orders = new ArrayList<>();
 }

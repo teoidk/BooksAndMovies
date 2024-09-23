@@ -17,5 +17,9 @@ public class MovieDto {
 
     @Valid
     @NotNull
-    private List<MovieItemDto> items;
+    private List<RatingDto> ratings;
+
+    @Valid
+    @NotNull
+    private List<OrderDto> orders;
 }

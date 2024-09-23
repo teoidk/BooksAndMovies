@@ -2,29 +2,37 @@ package com.example.demo.mappers;
 
 import com.example.demo.controllers.dtos.MovieDto;
 import com.example.demo.persistence.entities.Movie;
-import lombok.experimental.UtilityClass;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
-@UtilityClass
+@RequiredArgsConstructor
+@Component
 public class MovieMapper {
 
-    public MovieDto toMovieDto(Movie movie) {
+    private final RatingMapper ratingMapper;
+    private final OrderMapper orderMapper;
+
+    public MovieDto toDto(Movie movie) {
         MovieDto movieDto = new MovieDto();
         movieDto.setId(movie.getId());
         movieDto.setName(movie.getName());
         movieDto.setType(movie.getType());
-        movieDto.setItems(movie.getMovieItems().stream()
-                .map(MovieItemMapper::toMovieDto)
+        movieDto.setRatings(movie.getRatings().stream()
+                .map(ratingMapper::toDto)
+                .toList());
+        movieDto.setOrders(movie.getOrders().stream()
+                .map(orderMapper::toDto)
                 .toList());
         return movieDto;
     }
 
-    public Movie toMovieEntity(MovieDto movieDto) {
+    public Movie toEntity(MovieDto movieDto) {
         Movie movie = new Movie();
         movie.setId(movieDto.getId());
         movie.setName(movieDto.getName());
         movie.setType(movieDto.getType());
-        movie.setMovieItems(movieDto.getItems().stream()
-                .map(item -> MovieItemMapper.toMovieEntity(item, movie))
+        movie.setRatings(movieDto.getRatings().stream()
+                .map(ratingMapper::toEntity)
                 .toList());
         return movie;
     }

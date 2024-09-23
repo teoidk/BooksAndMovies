@@ -19,5 +19,10 @@ public class BookDto {
 
     @Valid
     @NotNull
-    private List<BookItemDto> items;
+    private List<RatingDto> ratings;
+
+    @Valid
+    @NotNull
+    private List<OrderDto> orders;
 }
+
